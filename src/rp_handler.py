@@ -5,6 +5,7 @@ import requests
 from requests.adapters import HTTPAdapter, Retry
 
 LOCAL_URL = "http://127.0.0.1:3000/sdapi/v1"
+BASE_URL = "http://127.0.0.1:3000"
 
 automatic_session = requests.Session()
 retries = Retry(total=10, backoff_factor=0.1, status_forcelist=[502, 503, 504])
@@ -45,7 +46,7 @@ def run_controlnet(controlnet_request):
     Run inference on a request.
     """
     response = automatic_session.get(
-        url=f"{LOCAL_URL}/controlnet/{controlnet_request}", timeout=600
+        url=f"{BASE_URL}/controlnet/{controlnet_request}", timeout=600
     )
     return response.json()
 
