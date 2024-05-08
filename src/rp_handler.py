@@ -31,10 +31,22 @@ def wait_for_service(url):
         time.sleep(0.2)
 
 
+def run_controlnet(controlnet_request):
+    """
+    Run inference on a request.
+    """
+    response = automatic_session.get(
+        url=f"{BASE_URL}/controlnet/{controlnet_request}", timeout=600
+    )
+    return response.json()
+
+
 def run_inference(inference_request):
     """
     Run inference on a request.
     """
+    if inference_request.get("action") == "controlnet":
+        return run_controlnet(inference_request["command"])
     response = automatic_session.post(
         url=f"{LOCAL_URL}/txt2img", json=inference_request, timeout=600
     )
@@ -58,12 +70,7 @@ def handler(event):
     """
     This is the handler function that will be called by the serverless.
     """
-    json = {}
-    if event.get("controlnet"):
-        json = run_controlnet(event["controlnet"])
-    else:
-        json = run_inference(event["input"])
-
+    json = run_inference(event["input"])
     # return the output that you want to be returned like pre-signed URLs to output artifacts
     return json
 
