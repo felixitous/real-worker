@@ -54,16 +54,17 @@ RUN --mount=type=cache,target=/cache --mount=type=cache,target=/root/.cache/pip 
 
 RUN --mount=type=cache,target=/root/.cache/pip \
     git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git && \
+    git clone https://github.com/Mikubill/sd-webui-controlnet.git ${ROOT}/extensions/sd-webui-controlnet && \
     cd stable-diffusion-webui && \
     git reset --hard ${SHA}
-#&& \ pip install -r requirements_versions.txt
 
 COPY --from=download /repositories/ ${ROOT}/repositories/
 COPY --from=download /model.safetensors /model.safetensors
 COPY --from=download /face.safetensors /stable-diffusion-webui/models/ControlNet/face.safetensors
 RUN mkdir ${ROOT}/interrogate && cp ${ROOT}/repositories/clip-interrogator/data/* ${ROOT}/interrogate
 RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install -r ${ROOT}/repositories/CodeFormer/requirements.txt
+    pip install -r ${ROOT}/repositories/CodeFormer/requirements.txt && \
+    pip install -r ${ROOT}/extensions/sd-webui-controlnet/requirements.txt
 
 # Install Python dependencies (Worker Template)
 COPY builder/requirements.txt /requirements.txt
