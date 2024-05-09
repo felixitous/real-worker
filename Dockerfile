@@ -66,7 +66,7 @@ RUN mkdir ${ROOT}/interrogate && cp ${ROOT}/repositories/clip-interrogator/data/
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install -r ${ROOT}/repositories/CodeFormer/requirements.txt && \
     pip install -r ${ROOT}/extensions/sd-webui-controlnet/requirements.txt && \
-    pip install -r ${ROOT}/extensions/sd-webui-reactor/requirements.txt && \
+    pip install -r ${ROOT}/extensions/sd-webui-reactor/requirements.txt
 
 # install canny model
 RUN wget https://huggingface.co/lllyasviel/control_v11p_sd15_canny/resolve/main/diffusion_pytorch_model.safetensors ${ROOT}/models/ControlNet/canny15.safetensors
