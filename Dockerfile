@@ -68,7 +68,8 @@ RUN mkdir ${ROOT}/interrogate && cp ${ROOT}/repositories/clip-interrogator/data/
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install -r ${ROOT}/repositories/CodeFormer/requirements.txt && \
     pip install -r ${ROOT}/extensions/sd-webui-controlnet/requirements.txt && \
-    pip install -r ${ROOT}/extensions/sd-webui-reactor/requirements.txt
+    pip install -r ${ROOT}/extensions/sd-webui-reactor/requirements.txt && \
+    pip install onnxruntime
 
 # install inswapper model
 RUN mkdir -p ${ROOT}/models/insightface && \
